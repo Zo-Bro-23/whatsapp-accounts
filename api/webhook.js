@@ -15,7 +15,7 @@ module.exports = (req, res) => {
                 .then(() => {
                     res.send('Okay')
                 })
-                .catch(error => { throw new Error(error) })
+                .catch(error => { res.status(400).send(error.message) })
         }
 
         res.send('Okay')
@@ -25,7 +25,7 @@ module.exports = (req, res) => {
                 .then(() => {
                     res.send('Okay')
                 })
-                .catch(error => { throw new Error(error) })
+                .catch(error => { res.status(400).send(error.message) })
         } catch (error) {
             res.status(400).send(error.message)
         }

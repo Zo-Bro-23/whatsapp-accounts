@@ -7,6 +7,7 @@ module.exports = (req, res) => {
     })
 
     try {
+        console.log(req.body.senderData.chatId)
         if (req.headers.authorization == `Bearer ${process.env.AUTHOR}`) {
             restAPI.message.sendMessage("919288001128@c.us", null, `${req.body.senderData.chatId}`)
         }

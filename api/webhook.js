@@ -1,12 +1,14 @@
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const whatsAppClient = require('@green-api/whatsapp-api-client')
-    const TelegramBot = require('node-telegram-bot-api')
+    const { MongoClient } = require('mongodb')
     require('dotenv').config()
     const restAPI = whatsAppClient.restAPI({
         idInstance: process.env.ID,
         apiTokenInstance: process.env.KEY
     })
-    const bot = new TelegramBot(process.env.TOKEN)
+    const client = new MongoClient(process.env.MONGO)
+    const dbName = 'personal'
+    const collectionName = 'accounts'
 
     try {
         if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
@@ -19,30 +21,30 @@ module.exports = (req, res) => {
                 const amount = message.slice(1, amountIndex)
                 const description = message.slice(amountIndex + 1)
 
-                restAPI.message.sendMessage("919288001128@c.us", null, `$${amount} - ${description}`)
-                    .then(() => {
-                        res.send('Okay')
-                    })
+                await client.connect()
+                const db = client.db(dbName)
+                const collection = db.collection(collectionName)
+                await collection.insertOne({ _id: Date.now(), amount, description })
+                await restAPI.message.sendMessage("919288001128@c.us", null, `**Entry inserted: $${amount}**\n(${description})`)
                     .catch(error => {
                         console.log(error.message)
-                        res.status(400).send(error.message)
+                        return res.status(400).send(error.message)
                     })
+                return res.send('Okay')
             }
         } else {
-            res.send('Okay')
+            return res.send('Okay')
         }
     } catch (error) {
         try {
-            restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
-                .then(() => {
-                    res.send('Okay')
-                })
+            await restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
                 .catch(error => {
                     console.log(error.message)
-                    res.status(400).send(error.message)
+                    return res.status(400).send(error.message)
                 })
+            return res.send('Okay')
         } catch (error) {
-            res.status(400).send(error.message)
+            return res.status(400).send(error.message)
         }
     }
 }

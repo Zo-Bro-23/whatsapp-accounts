@@ -6,6 +6,8 @@ module.exports = (req, res) => {
         apiTokenInstance: process.env.KEY
     })
 
+    console.log(req.body, req.headers)
+
     try {
         restAPI.message.sendMessage("919288001128@c.us", null, `${JSON.stringify(req.query)} ${JSON.stringify(req.headers)}`)
     } catch (error) {

@@ -16,4 +16,5 @@ module.exports = (req, res) => {
     } catch (error) {
         bot.sendMessage("@zobro23", `Accounts error: ${error.message}`)
     }
+    res.send('Okay')
 }

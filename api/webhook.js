@@ -10,9 +10,9 @@ module.exports = (req, res) => {
 
     try {
         console.log(req.body)
-        // if (req.headers['X-Telegram-Bot-Api-Secret-Token'] == process.env.AUTHOR) {
+        if (req.headers.typeWebhook == 'incomingMessageReceived') {
             restAPI.message.sendMessage("919288001128@c.us", `${req.body.message.text}`)
-        // }
+        }
     } catch (error) {
         restAPI.message.sendMessage("919288001128@c.us", `Accounts error: ${error.message}`)
     }

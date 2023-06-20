@@ -7,9 +7,9 @@ module.exports = (req, res) => {
     })
 
     try {
-        console.log(req.body.senderData.chatId)
+        console.log(req.body)
         if (req.headers.authorization == `Bearer ${process.env.AUTHOR}`) {
-            restAPI.message.sendMessage("919288001128@c.us", null, `${req.body.senderData.chatId}`)
+            restAPI.message.sendMessage("919288001128@c.us", null, `${req.body.senderData.chatId} ${req.body.messageData.textMessageData.textMessage}`)
         }
     } catch (error) {
         restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)

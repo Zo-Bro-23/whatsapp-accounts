@@ -29,7 +29,10 @@ module.exports = async (req, res) => {
                         }
                     })
                     accounts.forEach(account => {
-                        total -= account.amount
+                        const amount = parseFloat(account.amount)
+                        if (amount != NaN) {
+                            total -= parseFloat(account.amount)
+                        }
                     })
                     accounts.forEach(account => {
                         response += `*$${account.amount}:* ${account.description}\n`

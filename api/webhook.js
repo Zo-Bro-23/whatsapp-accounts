@@ -10,15 +10,24 @@ module.exports = (req, res) => {
 
     try {
         if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
-            console.log('received', req.body)
-            restAPI.message.sendMessage("919288001128@c.us", null, req.body.messageData.extendedTextMessageData.text)
-                .then(() => {
-                    res.send('Okay')
-                })
-                .catch(error => {
-                    console.log(error.message)
-                    res.status(400).send(error.message)
-                })
+            if (req.body?.messageData?.typeMessage == 'extendedTextMessage') {
+                const message = req.body.messageData.extendedTextMessageData.text
+                if (message.slice(0, 1) !== '$') {
+                    return res.send('Okay')
+                }
+                const amountIndex = message.indexOf(' ')
+                const amount = message.slice(1, amountIndex)
+                const description = message.slice(amountIndex + 1)
+
+                restAPI.message.sendMessage("919288001128@c.us", null, `$${amount} - ${description}`)
+                    .then(() => {
+                        res.send('Okay')
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                        res.status(400).send(error.message)
+                    })
+            }
         } else {
             res.send('Okay')
         }

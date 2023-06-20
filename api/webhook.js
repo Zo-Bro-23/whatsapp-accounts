@@ -10,8 +10,8 @@ module.exports = (req, res) => {
 
     try {
         console.log(req.body)
-        if (req.body.typeWebhook == 'outgoingMessageReceived' && req.headers.authorization == `Bearer ${process.env.AUTHOR}` && req.body.senderData.chatId == '919288001128@c.us') {
-            restAPI.message.sendMessage("919288001128@c.us", `${req.body.messageData.extendedTextMessageData.text}`)
+        if (req.body.typeWebhook == 'outgoingMessageReceived' && req.body.senderData.chatId == '919288001128@c.us') {
+            restAPI.message.sendMessage("919288001128@c.us", `received`)
         }
     } catch (error) {
         restAPI.message.sendMessage("919288001128@c.us", `Accounts error: ${error.message}`)

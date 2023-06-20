@@ -31,11 +31,18 @@ module.exports = async (req, res) => {
                     accounts.forEach(account => {
                         const amount = parseFloat(account.amount)
                         if (amount != NaN) {
-                            total -= parseFloat(account.amount)
+                            total -= amount
                         }
                     })
                     accounts.forEach(account => {
-                        response += `*$${account.amount}:* ${account.description}\n`
+                        let amount = account.amount
+                        amount = 0 - amount
+                        if (amount < 0) { 
+                            amount = '-' + '$' + Math.abs(amount).toString()
+                        } else {
+                            amount = '$' + amount.toString()
+                        }
+                        response += `*$${amount}:* ${account.description}\n`
                     })
 
                     response += `---------------------\n*_Total: $${total}_*`

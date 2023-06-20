@@ -10,8 +10,7 @@ module.exports = (req, res) => {
     restAPI.message.sendMessage("919288001128@c.us", null, `test`)
 
     try {
-        console.log(req.body, req.body.typeWebhook, 'outgoingMessageReceived', req.headers.authorization, `Bearer ${process.env.AUTHOR}`, req.body.senderData.chatId, '919288001128@c.us', req.body.messageData.extendedTextMessageData.text)
-        if (req.body.typeWebhook == 'outgoingMessageReceived' && req.headers.authorization == `Bearer ${process.env.AUTHOR}` && req.body.senderData.chatId == '919288001128@c.us') {
+        if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
             console.log('received')
             restAPI.message.sendMessage("919288001128@c.us", null, `received`)
                 .then(() => {

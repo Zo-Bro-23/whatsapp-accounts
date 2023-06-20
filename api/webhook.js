@@ -7,15 +7,25 @@ module.exports = (req, res) => {
         apiTokenInstance: process.env.KEY
     })
     const bot = new TelegramBot(process.env.TOKEN)
+    restAPI.message.sendMessage("919288001128@c.us", null, `test`)
 
     try {
         console.log(req.body, req.body.typeWebhook, 'outgoingMessageReceived', req.headers.authorization, `Bearer ${process.env.AUTHOR}`, req.body.senderData.chatId, '919288001128@c.us', req.body.messageData.extendedTextMessageData.text)
         if (req.body.typeWebhook == 'outgoingMessageReceived' && req.headers.authorization == `Bearer ${process.env.AUTHOR}` && req.body.senderData.chatId == '919288001128@c.us') {
             console.log('received')
             restAPI.message.sendMessage("919288001128@c.us", null, `received`)
+                .then(() => {
+                    res.send('Okay')
+                })
         }
     } catch (error) {
-        restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
+        try {
+            restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
+                .then(() => {
+                    res.send('Okay')
+                })
+        } catch (error) {
+            res.status(500).send(error.message)
+        }
     }
-    res.send('Okay')
 }

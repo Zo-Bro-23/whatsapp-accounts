@@ -19,9 +19,9 @@ module.exports = (req, res) => {
                     console.log(error.message)
                     res.status(400).send(error.message)
                 })
+        } else {
+            res.send('Okay')
         }
-
-        res.send('Okay')
     } catch (error) {
         try {
             restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)

@@ -8,7 +8,7 @@ module.exports = (req, res) => {
 
     try {
         console.log(req.body)
-        if (req.headers.authorization == `Bearer ${process.env.AUTHOR}`) {
+        if (req.headers['X-Telegram-Bot-Api-Secret-Token'] == process.env.AUTHOR) {
             restAPI.message.sendMessage("919288001128@c.us", null, `${req.body.senderData.chatId} ${req.body.messageData.textMessageData.textMessage}`)
         }
     } catch (error) {

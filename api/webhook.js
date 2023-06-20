@@ -6,10 +6,10 @@ module.exports = (req, res) => {
         apiTokenInstance: process.env.KEY
     })
 
-    console.log(req.body, req.headers)
-
     try {
-        restAPI.message.sendMessage("919288001128@c.us", null, `${JSON.stringify(req.query)} ${JSON.stringify(req.headers)}`)
+        if (req.headers.authorization == `Bearer ${process.env.AUTHOR}`) {
+            restAPI.message.sendMessage("919288001128@c.us", null, `${req.body.senderData.chatId}`)
+        }
     } catch (error) {
         restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
     }

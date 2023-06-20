@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     const bot = new TelegramBot(process.env.TOKEN)
 
     try {
-        if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
+        // if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
             console.log('received')
             restAPI.message.sendMessage("919288001128@c.us", null, 'rec')
                 .then(() => {
@@ -19,9 +19,9 @@ module.exports = (req, res) => {
                     console.log(error.message)
                     res.status(400).send(error.message)
                 })
-        } else {
-            res.send('Okay')
-        }
+        // } else {
+            // res.send('Okay')
+        // }
     } catch (error) {
         try {
             restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)

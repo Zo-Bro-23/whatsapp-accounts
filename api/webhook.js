@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
                         } else {
                             amount = '$' + amount.toString()
                         }
-                        response += `*$${amount}:* ${account.description}\n`
+                        response += `*${amount}:* ${account.description}\n`
                     })
 
                     response += `---------------------\n*_Total: $${total}_*`

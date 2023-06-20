@@ -7,8 +7,8 @@ module.exports = (req, res) => {
     })
 
     try {
-        restAPI.messaage.sendMessage("919288001128@c.us", null, `${JSON.stringify(req.query)} ${JSON.stringify(req.headers)}`)
+        restAPI.message.sendMessage("919288001128@c.us", null, `${JSON.stringify(req.query)} ${JSON.stringify(req.headers)}`)
     } catch (error) {
-        restAPI.messaage.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
+        restAPI.message.sendMessage("919288001128@c.us", null, `Accounts error: ${error.message}`)
     }
 }

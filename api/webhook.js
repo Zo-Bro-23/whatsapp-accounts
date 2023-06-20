@@ -7,7 +7,6 @@ module.exports = (req, res) => {
         apiTokenInstance: process.env.KEY
     })
     const bot = new TelegramBot(process.env.TOKEN)
-    restAPI.message.sendMessage("919288001128@c.us", null, `test`)
 
     try {
         if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {

@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     const bot = new TelegramBot(process.env.TOKEN)
 
     try {
-        console.log(req.body)
+        console.log(req.body, req.body.typeWebhook, 'outgoingMessageReceived', req.headers.authorization, `Bearer ${process.env.AUTHOR}`, req.body.senderData.chatId, '919288001128@c.us', req.body.messageData.textMessageData.textMessage, req.body.messageData.extendedTextMessageData.text)
         if (req.body.typeWebhook == 'outgoingMessageReceived' && req.headers.authorization == `Bearer ${process.env.AUTHOR}` && req.body.senderData.chatId == '919288001128@c.us') {
             restAPI.message.sendMessage("919288001128@c.us", null, `received`)
         }

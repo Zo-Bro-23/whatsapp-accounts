@@ -14,6 +14,17 @@ module.exports = async (req, res) => {
     const collectionName = 'accounts'
 
     try {
+        if (req.body.SmsSid !== undefined) {
+            await restAPI.message.sendMessage("919288001128@c.us", null, req.body.Body)
+                .catch(error => {
+                    console.log(error.message)
+                    return res.status(400).send(error.message)
+                })
+            return res.send('Okay')
+        }
+
+        // I'm reusing the server infrastructure for handling my Twilio SMS messages
+
         if (req.body?.typeWebhook == 'outgoingMessageReceived' && req.headers?.authorization == `Bearer ${process.env.AUTHOR}` && req.body?.senderData?.chatId == '919288001128@c.us') {
             if (req.body?.messageData?.typeMessage == 'extendedTextMessage') {
                 const message = req.body.messageData.extendedTextMessageData.text
@@ -40,7 +51,7 @@ module.exports = async (req, res) => {
                     accounts.forEach(account => {
                         let amount = account.amount
                         amount = 0 - amount
-                        if (amount < 0) { 
+                        if (amount < 0) {
                             amount = '-' + '$' + Math.abs(amount).toString()
                         } else {
                             amount = '$' + amount.toString()
@@ -75,7 +86,7 @@ module.exports = async (req, res) => {
                 const description = message.slice(amountIndex + 1)
 
                 await collection.insertOne({ _id: Date.now(), amount, description })
-                
+
                 await restAPI.message.sendMessage("919288001128@c.us", null, `*Entry added:*\n_Amount:_ $${amount}\n_Description:_ ${description}`)
                     .catch(error => {
                         console.log(error.message)

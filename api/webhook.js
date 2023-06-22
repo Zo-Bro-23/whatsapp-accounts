@@ -1,5 +1,6 @@
 module.exports = async (req, res) => {
     console.log(req.body)
+    console.log(req.headers)
 
     const whatsAppClient = require('@green-api/whatsapp-api-client')
     const { MongoClient } = require('mongodb')

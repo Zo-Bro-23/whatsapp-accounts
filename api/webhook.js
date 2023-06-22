@@ -1,4 +1,6 @@
 module.exports = async (req, res) => {
+    console.log(req.body)
+
     const whatsAppClient = require('@green-api/whatsapp-api-client')
     const { MongoClient } = require('mongodb')
     require('dotenv').config()
